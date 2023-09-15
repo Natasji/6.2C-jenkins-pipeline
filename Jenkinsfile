@@ -34,14 +34,14 @@ pipeline{
                         to: "njiang55@gmail.com",
                         subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
                         body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
-                        attachLog: true
+                        attachLog: true 
                     )               
                 }
                 failure{
                     emailext(
                         to: "njiang55@gmail.com",
                         subject: "Test Stage Passed: ${currentBuild.fullDisplayName}",
-                        body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL:\\${BUILD_LOG, maxLines=50, escapeHtml=false} test failed",
+                        body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test failed",
                         attachLog: true 
                     )
                                                        
