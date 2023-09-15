@@ -33,7 +33,7 @@ pipeline{
                     emailext(
                         to: "njiang55@gmail.com",
                         subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
-                        body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nlog:${BUILD_LOG, maxLines, escapeHtml}  test was successful",
+                        body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}\nlog:\\${BUILD_LOG, maxLines=50, escapeHtml=false}  test was successful",
                     )               
                 }
                 failure{
