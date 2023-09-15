@@ -20,6 +20,14 @@ pipeline{
                 echo"unit tests"
                 echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
+
+            post{
+                success{
+                    mail to: "njiang55@gmail.com"
+                    subject: "test success"
+                    body: "Build was success"
+                }
+            }
             post {
                 always {
                     script {
