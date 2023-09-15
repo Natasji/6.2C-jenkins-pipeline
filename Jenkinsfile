@@ -56,6 +56,21 @@ pipeline{
 
             
         }
+        post {
+            always {
+                emailext (
+                    to: 'email@example.com',
+                    subject: "Jenkins Build: ${currentBuild.fullDisplayName}",
+                    body: """<p>START OF THE EMAIL</p>
+                    <p>Job Name: ${env.JOB_NAME}</p>
+                    <p>Build Number: ${env.BUILD_NUMBER}</p>
+                    <p>URL: ${env.BUILD_URL}</p>
+                    <p>END OF THE EMAIL</p>""",
+                    mimeType: 'text/html'
+        )
+    }
+}
+
 
     }
 }
