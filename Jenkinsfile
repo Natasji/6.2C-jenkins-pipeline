@@ -13,20 +13,19 @@ pipeline{
                 echo "Fetch the source code from the directory path specified by the environment variable"
                 echo "Build automation using Maven"
             }
-        }
-
-        stage('Unit and Integration Test'){
-            steps{
-                echo"unit tests"
-                echo"Using JUnit for unit tests, using JMeter for integration tests"
-            }
-
             post{
                 success{
                     mail to: "njiang55@gmail.com",
                     subject: "test success",
                     body: "Build was successful"
                 }
+            }            
+        }
+
+        stage('Unit and Integration Test'){
+            steps{
+                echo"unit tests"
+                echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
             post {
                 always {
