@@ -22,7 +22,7 @@ pipeline{
             }
             post{
                 success{
-                    mail(
+                    emailext(
                         to: "njiang55@gmail.com",
                         subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
                         body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
