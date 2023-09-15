@@ -22,10 +22,12 @@ pipeline{
             }
             post{
                 success{
-                    mail to: "njiang55@gmail.com",
-                    subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
-                    body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
-                    attachLog: true                  
+                    emailext(
+                        mail to: "njiang55@gmail.com",
+                        subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
+                        body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
+                        attachLog: true 
+                    )               
                 }
                 failure{
                     mail to: "njiang55@gmail.com",
