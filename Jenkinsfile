@@ -58,6 +58,7 @@ pipeline{
                     emailext(
                         to: "njiang55@gmail.com",
                         subject: "test success",
+                        body: "test",
                         attachLog: true 
                     )               
                 }
@@ -65,6 +66,7 @@ pipeline{
                     emailext(
                         to: "njiang55@gmail.com",
                         subject: "failed",
+                        body: "test",
                         attachLog: true 
                     )
                                                        
