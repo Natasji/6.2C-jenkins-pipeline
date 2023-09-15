@@ -14,8 +14,12 @@ pipeline{
                 echo "Build automation using Maven"
             }  
             post{
-                subject: "Build Status Email",
-                body: "Build was successful!"
+                success{
+                    mail to: "njiang55@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was successful!"
+                }
+
             }          
         }
 
