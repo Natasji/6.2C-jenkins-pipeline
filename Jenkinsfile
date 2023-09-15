@@ -20,6 +20,29 @@ pipeline{
                 echo"unit tests"
                 echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
+            post {
+                always {
+                    script {
+                        if (currentBuild.result == 'FAILURE') {
+                            emailext (
+                                to: 'njiang55@gmail55.com',
+                                subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
+                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
+                                attachLog: true,
+                                mimeType: 'text/plain'
+                            )
+                        } else {
+                            emailext (
+                                to: 'njiang55@gmail.com',
+                                subject: "Test Stage Passed: ${currentBuild.fullDisplayName}",
+                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
+                                attachLog: true,
+                                mimeType: 'text/plain'
+                            )
+                        }
+                    }
+                }
+            }            
         }
 
         stage('Code Analysis'){
@@ -33,7 +56,32 @@ pipeline{
             steps {
                 echo "Security Scan using OWASP Dependency-Check"
             }
+            post {
+                always {
+                    script {
+                        if (currentBuild.result == 'FAILURE') {
+                            emailext (
+                                to: 'njiang55@gmail.com',
+                                subject: "Security Scan Failed: ${currentBuild.fullDisplayName}",
+                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
+                                attachLog: true,
+                                mimeType: 'text/plain'
+                            )
+                        } else {
+                            emailext (
+                                to: 'njiang55@gmail.com',
+                                subject: "Security Scan Passed: ${currentBuild.fullDisplayName}",
+                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
+                                attachLog: true,
+                                mimeType: 'text/plain'
+                            )
+                        }
+                    }
+                }
+            }            
         }
+        
+
 
         stage('Deploy to Staging'){
             steps {
@@ -56,20 +104,6 @@ pipeline{
 
             
         }
-        post {
-            always {
-                emailext (
-                    to: 'email@example.com',
-                    subject: "Jenkins Build: ${currentBuild.fullDisplayName}",
-                    body: """<p>START OF THE EMAIL</p>
-                    <p>Job Name: ${env.JOB_NAME}</p>
-                    <p>Build Number: ${env.BUILD_NUMBER}</p>
-                    <p>URL: ${env.BUILD_URL}</p>
-                    <p>END OF THE EMAIL</p>""",
-                    mimeType: 'text/html'
-        )
-    }
-}
 
 
     }
