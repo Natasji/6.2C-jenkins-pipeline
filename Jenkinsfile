@@ -23,9 +23,9 @@ pipeline{
 
             post{
                 success{
-                    mail to: "njiang55@gmail.com"
-                    subject: "test success"
-                    body: "Build was success"
+                    mail to: "njiang55@gmail.com",
+                    subject: "test success",
+                    body: "Build was successful"
                 }
             }
             post {
