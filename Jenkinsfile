@@ -19,7 +19,6 @@ pipeline{
                     subject: "Build Status Email",
                     body: "Build was successful!"
                 }
-
             }          
         }
 
@@ -53,6 +52,23 @@ pipeline{
             steps{
                 echo "check the quality of the code"
                 echo "Use SonarQube for code quality inspection"
+            }
+            post{
+                success{
+                    emailext(
+                        to: "njiang55@gmail.com",
+                        subject: "test success",
+                        attachLog: true 
+                    )               
+                }
+                failure{
+                    emailext(
+                        to: "njiang55@gmail.com",
+                        subject: "failed",
+                        attachLog: true 
+                    )
+                                                       
+                }
             }
         }
 
