@@ -12,13 +12,6 @@ pipeline{
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable"
                 echo "Build automation using Maven"
-            }
-            post{
-                success{
-                    mail to: "njiang55@gmail.com",
-                    subject: "test success",
-                    body: "Build was successful"
-                }
             }            
         }
 
@@ -27,29 +20,20 @@ pipeline{
                 echo"unit tests"
                 echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
-            post {
-                always {
-                    script {
-                        if (currentBuild.result == 'FAILURE') {
-                            emailext (
-                                to: 'njiang55@gmail.com',
-                                subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
-                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
-                                attachLog: true,
-                                mimeType: 'text/plain'
-                            )
-                        } else {
-                            emailext (
-                                to: 'njiang55@gmail.com',
-                                subject: "Test Stage Passed: ${currentBuild.fullDisplayName}",
-                                body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
-                                attachLog: true,
-                                mimeType: 'text/plain'
-                            )
-                        }
-                    }
+            post{
+                success{
+                    mail to: "njiang55@gmail.com",
+                    subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
+                    body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
+                    attachLog: true                  
                 }
-            }            
+                failure{
+                    mail to: "njiang55@gmail.com",
+                    subject: "Test Stage Passed: ${currentBuild.fullDisplayName}",
+                    body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test failed",
+                    attachLog: true                                    
+                }
+            }                      
         }
 
         stage('Code Analysis'){
