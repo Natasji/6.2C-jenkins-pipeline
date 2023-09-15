@@ -12,7 +12,11 @@ pipeline{
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable"
                 echo "Build automation using Maven"
-            }            
+            }  
+            post{
+                subject: "Build Status Email",
+                body: "Build was successful!"
+            }          
         }
 
         stage('Unit and Integration Test'){
