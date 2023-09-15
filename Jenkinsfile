@@ -11,38 +11,47 @@ pipeline{
         stage('Build'){
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable"
-                echo "Compile the code and generate any necessary artifacts"
+                echo "Build automation using Maven"
             }
         }
 
-        stage('Test'){
+        stage('Unit and Integration Test'){
             steps{
                 echo"unit tests"
-                echo"integration tests"
+                echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
         }
 
-        stage('Code Quality Check'){
+        stage('Code Analysis'){
             steps{
                 echo "check the quality of the code"
+                echo "Use SonarQube for code quality inspection"
             }
         }
 
-        stage('Deploy'){
+        stage('Security Scan'){
             steps {
-                echo "deploy the application to a testing environment specified by the environment variable"
+                echo "Security Scan using OWASP Dependency-Check"
             }
         }
 
-        stage('Approval'){
+        stage('Deploy to Staging'){
+            steps {
+                echo "Deploy using EC2 Jenkins plugin"
+            }
+        }
+
+        stage('Integration Tests on Staging'){
             steps{
-                sleep 10
+                echo "Using Selenium to run integration test in staging envireonment"
             }
         }
 
         stage('Deploy to Production'){
             steps{
+                    echo "Using Jenkins EC2 plugin to deploy"
                     echo "Deploying to production environment: ${env.PRODUCTION_ENVIRONMENT}"
+
                 }
 
             
