@@ -25,7 +25,7 @@ pipeline{
                     script {
                         if (currentBuild.result == 'FAILURE') {
                             emailext (
-                                to: 'njiang55@gmail55.com',
+                                to: 'njiang55@gmail.com',
                                 subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
                                 body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL}",
                                 attachLog: true,
