@@ -12,26 +12,18 @@ pipeline{
             steps{
                 echo "Fetch the source code from the directory path specified by the environment variable"
                 echo "Build automation using Maven"
-            }  
-            post{
-                success{
-                    mail to: "njiang55@gmail.com",
-                    subject: "Build Status Email",
-                    body: "Build was successful!"
-                }
-            }          
+            }            
         }
 
         stage('Unit and Integration Test'){
             steps{
-                echo"unit tests"
                 echo"Using JUnit for unit tests, using JMeter for integration tests"
             }
             post{
                 success{
                     emailext(
                         to: "njiang55@gmail.com",
-                        subject: "Test Stage Failed: ${currentBuild.fullDisplayName}",
+                        subject: "Test Stage passed: ${currentBuild.fullDisplayName}",
                         body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test was successful",
                         attachLog: true 
                     )               
@@ -39,7 +31,7 @@ pipeline{
                 failure{
                     emailext(
                         to: "njiang55@gmail.com",
-                        subject: "Test Stage Passed: ${currentBuild.fullDisplayName}",
+                        subject: "Test Stage failed: ${currentBuild.fullDisplayName}",
                         body: "Job Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nURL: ${env.BUILD_URL} test failed",
                         attachLog: true 
                     )
@@ -52,25 +44,6 @@ pipeline{
             steps{
                 echo "check the quality of the code"
                 echo "Use SonarQube for code quality inspection"
-            }
-            post{
-                success{
-                    emailext(
-                        to: "njiang55@gmail.com",
-                        subject: "test success",
-                        body: "test",
-                        attachLog: true 
-                    )               
-                }
-                failure{
-                    emailext(
-                        to: "njiang55@gmail.com",
-                        subject: "failed",
-                        body: "test",
-                        attachLog: true 
-                    )
-                                                       
-                }
             }
         }
 
@@ -103,8 +76,6 @@ pipeline{
             }            
         }
         
-
-
         stage('Deploy to Staging'){
             steps {
                 echo "Deploy using EC2 Jenkins plugin"
@@ -122,9 +93,7 @@ pipeline{
                     echo "Using Jenkins EC2 plugin to deploy"
                     echo "Deploying to production environment: ${env.PRODUCTION_ENVIRONMENT}"
 
-                }
-
-            
+            }
         }
 
 
